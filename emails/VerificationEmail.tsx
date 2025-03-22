@@ -50,7 +50,7 @@ import {
               If you did not request this code, please ignore this email.
             </Text>
           </Row>
-          {username && (
+          {/*{username && (
             <Row>
               <Button
                 href={`http://localhost:3000/verify/${username}`}
@@ -58,7 +58,7 @@ import {
                 Verify Here
               </Button>
             </Row>
-          )}
+          )}*/}
         </Section>
       </Html>
     );
