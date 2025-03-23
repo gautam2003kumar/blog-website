@@ -4,8 +4,6 @@ import bcrypt from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 
-
-
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
@@ -18,19 +16,16 @@ export const authOptions: NextAuthOptions = {
 
             async authorize(credentials: any): Promise<any> {
                 await dbConnect();
-
                 try {
                     const user = await UserModel.findOne({
                         $or:[
-                            {email: credentials.identifier.email},
-                            {username: credentials.identifier.username}
+                            {email: credentials.identifier},
+                            {username: credentials.identifier}
                         ]
                     })
-
                     if(!user){
                         throw new Error("User not found with provided details")
                     }
-                    
                     if(!user.isVerified){
                         throw new Error("Please verify your account before login");
                     }

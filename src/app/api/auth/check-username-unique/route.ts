@@ -33,10 +33,10 @@ export async function GET(request: Request) {
         const existingVerifiedUser = await UserModel.findOne({username, isVerified: true})
 
         if(existingVerifiedUser){
-            return serveApiResponse(false, "Username is not avalble", 400)
+            return serveApiResponse(false, "Username is already taken. Please try another one.", 400);
         }
 
-        return serveApiResponse(true, "username is uniuque", 200)
+        return serveApiResponse(true, "Great choice! This username is available.", 200);
 
     } catch (error) {
         console.error("Error checking username",error);
