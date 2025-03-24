@@ -2,16 +2,19 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signInSchema } from "@/schemas/signInSchema";
+import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { signIn } from "next-auth/react";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { z } from "zod";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+
 
 const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,27 +32,23 @@ const SignIn = () => {
     setIsSubmitting(true);
 
     try {
-      const result = await signIn('Credentials', {
+      const response = await signIn('credentials', {
         redirect: false,
         identifier: data.identifier,
-        password: data.password,
+        password: data.password
       });
 
-      console.log(result)
-
-      if (result?.error) {
-        // Handle different error scenarios
-        if (result.error == 'CredentialsSignin') {
+      if (response?.error) {
+        if (response.error === 'CredentialsSignin') {
           toast.error("Sign-in failed", {
             description: "The email/username or password you entered is incorrect. Please try again."
           });
         } else {
           toast.error("Unexpected error", {
-            description: result.error,
+            description: response.error,
           });
         }
-      } else if (result?.url) {
-        // Redirect on success
+      } else if (response?.url) {
         router.replace("/home");
         toast.success("Welcome back!", {
           description: "You have successfully logged in. Enjoy your time on Blogify!"
@@ -57,11 +56,11 @@ const SignIn = () => {
       }
     } catch (error) {
       console.error("Error in sign-in process", error);
+      const axiosError = error as AxiosError<ApiResponse>;
+      let errorMessage = axiosError.response?.data.message;
+
       toast.error("Sign-in failed", {
-        description: "An unexpected error occurred. Please try again later.",
-        style:{
-          //color: ''
-        }
+        description: errorMessage ?? "An unexpected error occurred. Please try again later.",
       });
     } finally {
       setIsSubmitting(false);
