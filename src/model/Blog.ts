@@ -36,6 +36,10 @@ const BlogSchema: Schema<IBlog> = new Schema(
       type: Number,
       default: 0,
     },
+    category: {
+      type: String,
+      required: [true, 'Category is required']
+    },
     likes: [
       {
         type: Schema.Types.ObjectId,

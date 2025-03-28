@@ -5,6 +5,7 @@ import { useSession, signOut } from "next-auth/react"
 import { User } from "next-auth"
 import { Button } from "@/components/ui/button" 
 import { useState, useEffect } from "react"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
 const Navbar = () => {
     const { data: session } = useSession(); 
@@ -23,29 +24,24 @@ const Navbar = () => {
         }
     }, []);
 
-    const toggleTheme = () => {
-        const newTheme = isDarkMode ? 'light' : 'dark';
-        localStorage.setItem('theme', newTheme);
-        setIsDarkMode(!isDarkMode);
-    };
-
     return (
         <nav className="p-4 md:p-6 shadow-md">
             <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
                 {/* Blogify Logo/Title */}
                 <a href="#" className="text-2xl font-bold mb-4 md:mb-0">Blogify</a>
-                
+                 
                 {/* User Session Links */}
                 <div className="flex items-center space-x-4">
                     {session ? (
                         <>
+                            <Link href= "/write-blog" className="">Write Blog</Link> 
                             <span className="mr-4">Welcome, {user?.username || user?.email}</span>
-                            <Button 
-                                onClick={() => signOut()} 
-                                className="w-full md:w-auto"
-                            >
-                                Logout
-                            </Button>
+                            <Link href = {`/dashboard/${user?._id}`}>
+                                <Avatar>
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>    
+                                </Avatar>
+                            </Link>
                         </>
                     ) : (
                         <Link href="/auth/sign-in">
@@ -54,15 +50,6 @@ const Navbar = () => {
                             </Button>
                         </Link>
                     )}
-
-                    {/* Dark/Light Mode Toggle 
-                    <Button 
-                        onClick={toggleTheme} 
-                        className={`bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md transition`}
-                    >
-                        {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-                    </Button>
-                    */}
                 </div>
             </div>
         </nav>
