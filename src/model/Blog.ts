@@ -1,63 +1,43 @@
-import mongoose, { Schema, Document, Types } from 'mongoose';
+import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export interface IBlog extends Document {
+// Interface for TypeScript
+interface IBlog extends Document {
   title: string;
-  coverImage: string;
-  content: string;
-  author: Types.ObjectId;
-  views: number;
-  likes: Types.ObjectId[];
-  comments: Types.ObjectId[];
+  content: any; // EditorJS data is usually JSON
+  bannerUrl?: string;
+  description: string;
+  author: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
+  status: 'draft' | 'published';
+  tags?: string[];
+  category?: string;
+  comments?: mongoose.Types.ObjectId[];
+  views?: number;
+  likes?: number;
 }
 
-const BlogSchema: Schema<IBlog> = new Schema(
-  {
-    title: {
-      type: String,
-      required: [true, 'Title is required'],
-      trim: true,
-    },
-    coverImage: {
-      type: String,
-      required: [true, 'Cover Image is required'],
-    },
-    content: {
-      type: String,
-      required: [true, 'Content is required'],
-    },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    views: {
-      type: Number,
-      default: 0,
-    },
-    category: {
-      type: String,
-      required: [true, 'Category is required']
-    },
-    likes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    ],
-    comments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment',
-      },
-    ],
-  },
-  {
-    timestamps: true,
-  }
-);
+const BlogSchema: Schema = new Schema<IBlog>({
+  title: { type: String, required: true, trim: true },
+  content: { type: Object, required: true }, // EditorJS data stored as JSON
+  bannerUrl: { type: String },
+  description: { type: String, required: true },
+  author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+  status: { type: String, enum: ['draft', 'published'], default: 'draft' },
+  tags: [{ type: String }],
+  category: { type: String },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+  views: { type: Number, default: 0 },
+  likes: { type: Number, default: 0 },
+});
 
-const BlogModel = (mongoose.models.Blog as mongoose.Model<IBlog>) || mongoose.model<IBlog>('Blog', BlogSchema);
+// Middleware to update the timestamp on edit
+BlogSchema.pre('save', function (next) {
+  this.updatedAt = new Date();
+  next();
+});
 
+const BlogModel: Model<IBlog> = mongoose.models.Blog as Model<IBlog> || mongoose.model<IBlog>('Blog', BlogSchema);
 export default BlogModel;
