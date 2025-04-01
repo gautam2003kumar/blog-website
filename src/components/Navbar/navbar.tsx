@@ -54,8 +54,10 @@ const Navbar = () => {
 
                                     
                                     <div className="flex flex-col space-y-3 ">
-                                        <Button variant="outline" ><Link href="/profile">Edit Profile</Link></Button>
+                                        <Button variant="outline"><Link href="/profile">Edit Profile</Link></Button>
                                         <Button variant="outline" ><Link href="/dashboard">Dashboard</Link></Button>
+                                        <Button variant="outline" ><Link href="/dashboard">Change Password</Link></Button>
+                                        <Button variant="outline" ><Link href="/dashboard">Blogs</Link></Button>
                                         <Button variant="destructive" onClick={() => signOut()}>Logout</Button>
                                     </div>
                                 </SheetContent>
