@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 import EditorRenderer from '@/components/output/EditorRenderer';
+import BlogLoading from '@/components/Loader/BlogLoading';
 type Blog = {
   _id: string;
   bannerUrl: string;
@@ -31,7 +32,9 @@ const BlogDetail = () => {
     fetchBlog();
   }, [blogId]);
 
-  if (!blog) return <p>Loading...</p>;
+  if (!blog) return(
+    <BlogLoading/>
+  );
   return (
     <div className="container mx-auto p-4">
       <img src={blog.bannerUrl} alt={blog.title} className="w-full h-64 object-cover rounded-lg mb-4" />

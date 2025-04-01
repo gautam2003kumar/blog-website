@@ -5,14 +5,13 @@ import {NotepadText, LayoutDashboard, LogOut, CircleUser} from "lucide-react"
 import { useSession, signOut } from "next-auth/react"
 import { User } from "next-auth"
 import { Button } from "@/components/ui/button" 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger, SheetFooter, SheetTitle } from "@/components/ui/sheet"
 
 const Navbar = () => {
     const { data: session } = useSession(); 
     const user: User | undefined = session?.user; 
-
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
     useEffect(() => {
@@ -56,8 +55,8 @@ const Navbar = () => {
                                     <div className="flex flex-col space-y-3 ">
                                         <Button variant="outline"><Link href="/profile">Edit Profile</Link></Button>
                                         <Button variant="outline" ><Link href="/dashboard">Dashboard</Link></Button>
-                                        <Button variant="outline" ><Link href="/dashboard">Change Password</Link></Button>
-                                        <Button variant="outline" ><Link href="/dashboard">Blogs</Link></Button>
+                                        <Button variant="outline" ><Link href={`/auth/change-password/${user?._id}`}>Change Password</Link></Button>
+                                        <Button variant="outline" ><Link href={`/user-blogs/${user?._id}`}>Blogs</Link></Button>
                                         <Button variant="destructive" onClick={() => signOut()}>Logout</Button>
                                     </div>
                                 </SheetContent>

@@ -43,7 +43,6 @@ const SignUp = () => {
         try {
           const response = await axios.get(`/api/auth/check-username-unique?username=${encodeURIComponent(username)}`);
 
-          console.log(response)
 
           // Handle the response to check username availability
           setUsernameMessage(response.data.success)
