@@ -1,12 +1,13 @@
 'use client'
 
 import Link from "next/link"
+import {NotepadText, LayoutDashboard, LogOut, CircleUser} from "lucide-react"
 import { useSession, signOut } from "next-auth/react"
 import { User } from "next-auth"
 import { Button } from "@/components/ui/button" 
 import { useState, useEffect } from "react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger, SheetFooter } from "@/components/ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger, SheetFooter, SheetTitle } from "@/components/ui/sheet"
 
 const Navbar = () => {
     const { data: session } = useSession(); 
@@ -41,26 +42,22 @@ const Navbar = () => {
                                         <AvatarFallback>CN</AvatarFallback> 
                                     </Avatar>
                                 </SheetTrigger>
-                                <SheetContent className="p-6 space-y-4">
+                                <SheetContent className=" border-none p-6 space-y-4 bg-transparent max-w-xs mx-auto">
                                     <SheetHeader className="text-center">
+                                        <SheetTitle className="sr-only">User Menu</SheetTitle> 
                                         <Avatar className="mx-auto w-16 h-16">
                                             <AvatarImage src={user?.image || "https://github.com/shadcn.png"} />
                                             <AvatarFallback>CN</AvatarFallback> 
                                         </Avatar>
                                         <h2 className="text-lg font-semibold mt-2">{user?.name || user?.email}</h2>
                                     </SheetHeader>
+
                                     
-                                    <div className="flex flex-col space-y-3">
-                                        <Button variant="outline" className="w-full"><Link href="/profile">Edit Profile</Link></Button>
-                                        <Button variant="outline" className="w-full"><Link href="/dashboard">Dashboard</Link></Button>
-                                        <Button variant="destructive" className="w-full" onClick={() => signOut()}>Logout</Button>
+                                    <div className="flex flex-col space-y-3 ">
+                                        <Button variant="outline" ><Link href="/profile">Edit Profile</Link></Button>
+                                        <Button variant="outline" ><Link href="/dashboard">Dashboard</Link></Button>
+                                        <Button variant="destructive" onClick={() => signOut()}>Logout</Button>
                                     </div>
-                                    
-                                    <SheetFooter>
-                                        <SheetClose asChild>
-                                            <Button variant="secondary" className="w-full">Close</Button>
-                                        </SheetClose>
-                                    </SheetFooter>
                                 </SheetContent>
                             </Sheet>
                         </>
