@@ -26,8 +26,8 @@ const Editor = forwardRef((props, ref) => {
             inlineToolbar: true,
             config: {
               placeholder: "Header",
-              levels: [2, 3, 4],
-              defaultLevel: 3,
+              levels: [1, 2, 3, 4],
+              defaultLevel: 2,
             },
           },
           list: List,

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
-import EditorRenderer from '@/components/output/EditorRenderer';
+import EditorRenderer from '@/services/EditorRenderer';
 import BlogLoading from '@/components/Loader/BlogLoading';
 type Blog = {
   _id: string;
