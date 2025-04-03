@@ -1,12 +1,14 @@
 'use client';
 import Navbar from "@/components/Navbar/navbar";
 import Footer from "@/components/Footer/footer";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Heart, EyeIcon, MessageCircle, ThumbsUp } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import BlogLoading from "@/components/Loader/BlogLoading";
 const Category = [
   "Technology",
   "Health & Wellness",
@@ -34,6 +36,7 @@ const Category = [
   "Politics"
 ];
 
+const img = "https://t4.ftcdn.net/jpg/13/08/49/51/360_F_1308495170_VhNuIh06pGrlm1Xjt1P6eYWna0EALSsk.jpg"
 
 const Home = () => {
   interface Blog {
@@ -42,6 +45,8 @@ const Home = () => {
     likes: number;
     views: number;
     comments: Array<string>;
+    bannerUrl: string;
+    description: string
   }
 
   const [latestBlog, setLatestBlog] = useState<Blog[]>([]);
@@ -76,6 +81,7 @@ const Home = () => {
     fetchLatestBlogs().catch(handleError);
     fetchTrendingBlogs().catch(handleError);
   }, []);
+
   return (
 
     <div className="">
@@ -101,44 +107,86 @@ const Home = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
           {/* Latest Blog */}
-          <div>
+          { !latestBlog ? (
+            <BlogLoading/>
+          ) : (
+            <div>
             <h3 className="text-2xl font-bold mb-4">Latest Blogs</h3>
             <div className="space-y-4">
               {latestBlog.map((blog) => (
-                <Card key={blog._id} className="p-4 flex justify-between items-center bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
-                  <p className="text-lg font-semibold">{blog.title}</p>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1"><ThumbsUp className="w-5 h-5" /> {blog.likes}</div>
-                    <div className="flex items-center gap-1"><EyeIcon className="w-5 h-5" /> {blog.views}</div>
-                    <div className="flex items-center gap-1"><MessageCircle className="w-5 h-5" /> {blog.comments.length}</div>
-                  </div>
-                  <Link href={`/blogs/${blog._id}`}>
-                    <Button className="ml-4">Read More</Button>
-                  </Link>
+                
+                <Card key={blog._id} className="bg-white/10 shadow-lg hover:shadow-xl transition p-4 rounded-xl">
+                <CardHeader>
+                    <Image 
+                        src={blog.bannerUrl} 
+                        alt={blog.title} 
+                        width={100}
+                        height={100}
+                        className="w-full h-52 object-cover rounded-lg"
+                        unoptimized
+                    />
+                    <CardTitle className="mt-4 text-xl font-semibold ">
+                        {blog.title}
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className=" text-sm mb-3 flex-col">
+                      {blog.description.slice(0, 100)}...
+                      <a href={`/blogs/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
+                    </p>
+                    
+                    <div className="flex justify-center gap-5 text-gray-400 text-xs">
+                      <div className="flex items-center gap-1 "><ThumbsUp className="w-5 h-5" /> {blog.likes}</div>
+                      <div className="flex items-center gap-1"><EyeIcon className="w-5 h-5" /> {blog.views}</div>
+                      <div className="flex items-center gap-1"><MessageCircle className="w-5 h-5" /> {blog.comments.length}</div>
+                    </div>
+                </CardContent>
                 </Card>
               ))}
             </div>
           </div>
+          )
+          }
 
           {/* Trending Blog */}
-          <div>
-            <h3 className="text-2xl font-bold mb-4">Trending Blogs</h3>
-            <div className="space-y-4">
-              {trendingBlog.map((blog) => (
-                <Card key={blog._id} className="p-4 flex justify-between items-center bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
-                  <p className="text-lg font-semibold">{blog.title}</p>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1"><ThumbsUp className="w-5 h-5" /> {blog.likes}</div>
-                    <div className="flex items-center gap-1"><EyeIcon className="w-5 h-5" /> {blog.views}</div>
-                    <div className="flex items-center gap-1"><MessageCircle className="w-5 h-5" /> {blog.comments.length}</div>
-                  </div>
-                  <Link href={`/blogs/${blog._id}`}>
-                    <Button className="ml-4">Read More</Button>
-                  </Link>
+          {!trendingBlog ? (
+            <BlogLoading />
+          ) : (
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Trending Blogs</h3>
+              <div className="space-y-4">
+                {trendingBlog.map((blog) => (
+                <Card key={blog._id} className="bg-white/10 shadow-lg hover:shadow-xl transition p-4 rounded-xl">
+                <CardHeader>
+                    <Image 
+                        src={blog.bannerUrl} 
+                        alt={blog.title} 
+                        width={100}
+                        height={100}
+                        className="w-full h-52 object-cover rounded-lg"
+                        unoptimized
+                    />
+                    <CardTitle className="mt-4 text-xl font-semibold ">
+                        {blog.title}
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className=" text-sm mb-3 flex-col">
+                      {blog.description.slice(0, 100)}...
+                      <a href={`/blogs/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
+                    </p>
+                    
+                    <div className="flex justify-center gap-5 text-gray-400 text-xs">
+                      <div className="flex items-center gap-1 "><ThumbsUp className="w-5 h-5" /> {blog.likes}</div>
+                      <div className="flex items-center gap-1"><EyeIcon className="w-5 h-5" /> {blog.views}</div>
+                      <div className="flex items-center gap-1"><MessageCircle className="w-5 h-5" /> {blog.comments.length}</div>
+                    </div>
+                </CardContent>
                 </Card>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
       {/* Footer */}

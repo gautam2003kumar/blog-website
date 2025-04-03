@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Instagram, Facebook ,Twitter, Linkedin } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -65,10 +66,10 @@ export default function Footer() {
       <div className="mt-10 border-t border-gray-700 pt-4 flex justify-between items-center">
         <p className="text-gray-500">© 2025 Blogify. All rights reserved.</p>
         <div className="flex space-x-4">
-          <Twitter className="text-gray-100 cursor-pointer hover:text-gray-500" />
-          <Linkedin className="text-gray-100 cursor-pointer hover:text-gray-500" />
-          <Instagram className="text-gray-100 cursor-pointer hover:text-gray-500" />
-          <Facebook className="text-gray-100 cursor-pointer hover:text-gray-500" />
+          <Link href={`https://x.com`}><Twitter className="text-gray-100 cursor-pointer hover:text-gray-500" /></Link>
+          <Link href={`https://linkedin.com`}><Linkedin className="text-gray-100 cursor-pointer hover:text-gray-500" /></Link>
+          <Link href={`https://instagram.com`}><Instagram className="text-gray-100 cursor-pointer hover:text-gray-500" /></Link>
+          <Link href={`https://facebook.com`}><Facebook className="text-gray-100 cursor-pointer hover:text-gray-500" /></Link>
         </div>
       </div>
     </footer>
