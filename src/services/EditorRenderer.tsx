@@ -10,6 +10,14 @@ interface Props {
     blocks: Block[];
 }
 
+const Delimiter = ({ data }: any) => {
+    return (
+        <div className="flex items-center justify-center h-screen">
+            <p className="text-center">* * *</p>
+        </div>
+    );
+}
+
 const ParagraphBlock = ({ data }: any) => {
     return <p className="mb-4">{data.text === '<br>' ? <br/> : (data.text)}</p>;
 };
@@ -49,6 +57,7 @@ const blockComponents: Record<string, React.FC<{ data: any }>> = {
     paragraph: ParagraphBlock,
     list: ListBlock,
     header: HeadingBlock,
+    delimiter: Delimiter,
 };
 
 const EditorRenderer: React.FC<Props> = ({ blocks }) => {

@@ -2,13 +2,13 @@
 
 import BlogLoading from "@/components/Loader/BlogLoading";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer/footer";
+import { useSession } from "next-auth/react";
 
 const Page = () => {
     interface Blog {
@@ -22,6 +22,7 @@ const Page = () => {
 
     const { userId } = useParams();
     const router = useRouter();
+    const { data: session, status } = useSession();
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -29,26 +30,41 @@ const Page = () => {
         const fetchBlogs = async () => {
             try {
                 const response = await axios.get(`/api/blog/user-blogs/${userId}`);
-                setBlogs(response.data.data);
+                setBlogs(response.data.data); // Ensure `.data` is accessed properly
             } catch (error) {
-                console.error('Error while fetching blogs:', error);
+                console.error("Error fetching blogs:", error);
             } finally {
                 setLoading(false);
             }
         };
-        fetchBlogs();
-    }, [userId]);
+
+        if (session) {
+            fetchBlogs();
+        }
+    }, [userId, session]);
 
     const handleDelete = async (blogId: string) => {
         try {
-            await axios.delete(`/api/blog/${blogId}`);
+            await axios.delete(`/api/blog/delete/${blogId}`);
             setBlogs(blogs.filter(blog => blog._id !== blogId));
         } catch (error) {
             console.error("Error deleting blog:", error);
         }
     };
 
-    if (loading) return <BlogLoading />;
+    if (status === "loading") return <BlogLoading />;
+
+    if (!session) {
+        return (
+            <>
+                <div className="min-h-screen bg-gradient-to-b from-white to-black p-6 flex flex-col items-center justify-center">
+                    <h1 className="text-3xl font-bold text-gray-100 mb-6">Please login to view your blogs</h1>
+                    <Button className="mb-4" onClick={() => router.push('/auth/sign-in')}>Go to Login</Button>
+                </div>
+                <Footer />
+            </>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-white to-black p-6">
@@ -96,7 +112,7 @@ const Page = () => {
                     </Card>
                 ))}
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };
