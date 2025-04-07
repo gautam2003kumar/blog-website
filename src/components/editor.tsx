@@ -25,7 +25,7 @@ const Editor = forwardRef((props, ref) => {
             class: Header as unknown as BlockToolConstructable,
             inlineToolbar: true,
             config: {
-              placeholder: "Header",
+              placeholder: "Heading",
               levels: [1, 2, 3, 4],
               defaultLevel: 2,
             },
@@ -84,8 +84,8 @@ const Editor = forwardRef((props, ref) => {
   }, [isMounted]);
 
   return (
-    <div className="prose max-w-full min-h-screen">
-      <div id="editorjs" className="border p-4 min-h-[300px]"></div>
+    <div className="prose max-w-full mx-auto">
+      <div id="editorjs"></div>
     </div>
   );
 });

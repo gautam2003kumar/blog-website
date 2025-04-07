@@ -9,31 +9,31 @@ import { Heart, EyeIcon, MessageCircle, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import BlogLoading from "@/components/Loader/BlogLoading";
-const Category = [
-  "Technology",
-  "Health & Wellness",
-  "Science & Research",
+export const Category = [
   "Artificial Intelligence",
   "Business & Finance",
-  "Lifestyle",
-  "Travel",
   "Education",
   "Entertainment",
-  "Food & Cooking",
-  "Sports",
-  "Self-Improvement",
-  "Psychology",
-  "Startups",
-  "Marketing",
-  "Photography",
-  "Fashion",
-  "Spirituality",
-  "Music",
-  "History",
-  "Fitness",
-  "Personal Finance",
   "Environment",
-  "Politics"
+  "Fashion",
+  "Fitness",
+  "Food & Cooking",
+  "Health & Wellness",
+  "History",
+  "Lifestyle",
+  "Marketing",
+  "Music",
+  "Personal Finance",
+  "Photography",
+  "Politics",
+  "Psychology",
+  "Science & Research",
+  "Self-Improvement",
+  "Spirituality",
+  "Sports",
+  "Startups",
+  "Technology",
+  "Travel"
 ];
 
 const img = "https://t4.ftcdn.net/jpg/13/08/49/51/360_F_1308495170_VhNuIh06pGrlm1Xjt1P6eYWna0EALSsk.jpg"
