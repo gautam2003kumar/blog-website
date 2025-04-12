@@ -135,10 +135,7 @@ const Page = () => {
           </SelectContent>
         </Select>
       </div>
-
-
-
-
+      
       <label htmlFor="editorjs" className="font-semibold mb-2 block">Write the main content</label>
       <div className="border border-gray-300 rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-gray-600">
         <Editor ref={editorRef} />

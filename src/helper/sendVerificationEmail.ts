@@ -13,7 +13,7 @@ export async function sendVerificationEmail(
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'Blog-web <onboarding@resend.dev>',
+      from: 'Blogify <ncertebook.com>',
       to: email,
       subject: 'Blog-web | Verification Code',
       react: VerificationEmail({ username, otp: verifyCode }),

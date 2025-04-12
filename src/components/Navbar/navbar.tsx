@@ -33,7 +33,13 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                     {session ? (
                         <>
-                            <span className="mr-4">Welcome, {user?.name || user?.email}</span>
+                            <div className="flex items-center space-x-2">
+                                <span className="text-base">Welcome</span>
+                                <span className="font-bold text-xl">
+                                    {user?.username || user?.email}
+                                </span>
+                            </div>
+
                             <Sheet>
                                 <SheetTrigger asChild>
                                     <Avatar className="cursor-pointer">
@@ -47,8 +53,7 @@ const Navbar = () => {
                                         <Avatar className="mx-auto w-16 h-16">
                                             <AvatarImage src={user?.image || "https://github.com/shadcn.png"} />
                                             <AvatarFallback>CN</AvatarFallback> 
-                                        </Avatar>
-                                        <h2 className="text-lg font-semibold mt-2">{user?.name || user?.email}</h2>
+                                        </Avatar>                             
                                     </SheetHeader>
 
                                     
