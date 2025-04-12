@@ -1,25 +1,32 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface IComment extends Document {
-  user: mongoose.Schema.Types.ObjectId;
-  blog: mongoose.Schema.Types.ObjectId;
+  userId: mongoose.Schema.Types.ObjectId;
+  blogId: mongoose.Schema.Types.ObjectId;
+  name?: string; // Optional user display name
   content: string;
-  likes: mongoose.Schema.Types.ObjectId[]; // Store users who liked
+  likes: mongoose.Schema.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
+  likeCount?: number;
 }
 
 const CommentSchema: Schema<IComment> = new Schema<IComment>(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    blog: {
+    blogId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Blog",
       required: true,
+    },
+    name: {
+      type: String,
+      trim: true,
+      default: "Anonymous", // Optional: fallback name
     },
     content: {
       type: String,
@@ -34,16 +41,16 @@ const CommentSchema: Schema<IComment> = new Schema<IComment>(
     ],
   },
   {
-    timestamps: true, // Automatically add createdAt and updatedAt fields
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
-// Virtual field to get the like count
 CommentSchema.virtual("likeCount").get(function () {
-  return this.likes.length;
+  return this.likes?.length || 0;
 });
 
-// Ensure comments are sorted by newest first
 CommentSchema.index({ createdAt: -1 });
 
 const CommentModel: Model<IComment> =

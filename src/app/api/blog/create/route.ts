@@ -52,8 +52,6 @@ export async function POST(req: NextRequest) {
       category: category || '',
     });
 
-    console.log(newBlog);
-
     const response = await newBlog.save();
 
     if (!response) {

@@ -132,7 +132,7 @@ const Home = () => {
                 <CardContent>
                     <p className=" text-sm mb-3 flex-col">
                       {blog.description.slice(0, 100)}...
-                      <a href={`/blogs/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
+                      <a href={`/blog/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
                     </p>
                     
                     <div className="flex justify-center gap-5 text-gray-400 text-xs">
@@ -173,7 +173,7 @@ const Home = () => {
                 <CardContent>
                     <p className=" text-sm mb-3 flex-col">
                       {blog.description.slice(0, 100)}...
-                      <a href={`/blogs/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
+                      <a href={`/blog/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
                     </p>
                     
                     <div className="flex justify-center gap-5 text-gray-400 text-xs">

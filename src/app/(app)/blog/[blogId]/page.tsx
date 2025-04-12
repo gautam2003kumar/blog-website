@@ -6,6 +6,9 @@ import { useParams } from 'next/navigation';
 import EditorRenderer from '@/services/EditorRenderer';
 import BlogLoading from '@/components/Loader/BlogLoading';
 import { Link, Unlink, } from 'lucide-react';
+import CommentSection from '@/components/Comment/comment';
+
+
 type Blog = {
   _id: string;
   bannerUrl: string;
@@ -17,9 +20,11 @@ type Blog = {
 
 const BlogDetail = () => {
   const [blog, setBlog] = useState<Blog | null>(null);
-  const { blogId } = useParams();
+  const params = useParams();
+  const blogId = params.blogId as string;
   const [copied, setCopied] = useState(false);
   const [blogUrl, setBlogUrl] = useState("");
+  
 
   useEffect(() => {
     const currentUrl = window.location.href;
@@ -40,10 +45,6 @@ const BlogDetail = () => {
       }
       );
   };
-
-  const handlePostComment = async () =>{
-    
-  }
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -110,41 +111,9 @@ const BlogDetail = () => {
       </div>
       {/* Comment Section */}
       <div className="max-w-3xl mx-auto mt-12 p-4 border-t border-gray-200">
-        <h2 className="text-2xl font-semibold mb-6">Comments</h2>
-
-        {/* New Comment Form */}
-        <form className="space-y-4 mb-8">
-          <input
-            type="text"
-            placeholder="Your name"
-            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-          />
-          <textarea
-            placeholder="Write a comment..."
-            rows={4}
-            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-          ></textarea>
-          <button
-            type="submit"
-            className="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-900 transition"
-            onClick={() => handlePostComment()}
-          >
-            Post Comment
-          </button>
-        </form>
-
-        {/* Comments List (example static comments) */}
-        <div className="space-y-6">
-          <div className="border p-4 rounded-lg bg-gray-50">
-            <p className="text-sm text-gray-700">“Great blog post! Learned a lot.”</p>
-            <span className="text-xs text-gray-400 mt-1 block">— John Doe</span>
-          </div>
-
-          <div className="border p-4 rounded-lg bg-gray-50">
-            <p className="text-sm text-gray-700">“Can you write more on this topic?”</p>
-            <span className="text-xs text-gray-400 mt-1 block">— Jane Smith</span>
-          </div>
-        </div>
+        
+      <CommentSection blogId={blogId} />
+      
       </div>
 
     </div>

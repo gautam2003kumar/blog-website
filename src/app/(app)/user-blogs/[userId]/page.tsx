@@ -88,7 +88,7 @@ const Page = () => {
                         <CardContent>
                             <p className="text-gray-300 text-sm mb-3">
                                 {blog.description.slice(0, 100)}...
-                                <a href={`/blogs/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
+                                <a href={`/blog/${blog._id}`} className="text-blue-400 hover:underline ml-1">Read More</a>
                             </p>
                             <div className="flex justify-between text-gray-400 text-xs">
                                 <span>👀 {blog.views} Views</span>
