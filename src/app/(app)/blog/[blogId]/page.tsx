@@ -7,6 +7,7 @@ import EditorRenderer from '@/services/EditorRenderer';
 import BlogLoading from '@/components/Loader/BlogLoading';
 import { Link, Unlink, } from 'lucide-react';
 import CommentSection from '@/components/Comment/comment';
+import Image from "next/image";
 
 
 type Blog = {
@@ -91,7 +92,7 @@ const BlogDetail = () => {
       {/* Blog Details */}
       <div className="max-w-3xl mx-auto p-4">
         <h1 className="text-3xl font-bold mb-6">{blog.title}</h1>
-        <img src={blog.bannerUrl} alt={blog.title} className="w-full object-cover rounded-lg mb-4" />
+        <Image src={blog.bannerUrl} alt={blog.title} className="w-full object-cover rounded-lg mb-4" />
         <span className="text-sm text-gray-500 mb-8 block">Category: {blog.category}</span>
         <div className="prose">
           <EditorRenderer blocks={blog.content.blocks} />
