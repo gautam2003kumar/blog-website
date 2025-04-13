@@ -34,7 +34,7 @@ const CommentSection = ({ blogId }: { blogId: string }) => {
       }
       setComments(res.data.data || []);
     } catch (err) {
-      toast.error('Failed to load comments');
+      toast.error('Failed to load comments' + (err as Error).message);
     } finally {
       setLoadingComments(false);
     }
@@ -48,7 +48,7 @@ const CommentSection = ({ blogId }: { blogId: string }) => {
       toast.success('Comment deleted');
       await fetchComments();
     } catch (err) {
-      toast.error('Failed to delete comment.');
+      toast.error('Failed to delete comment.' + (err as Error).message);
     }
   };
 
@@ -82,7 +82,7 @@ const CommentSection = ({ blogId }: { blogId: string }) => {
         toast.error(response.data.message || 'Something went wrong.');
       }
     } catch (err) {
-      toast.error('Failed to post comment.');
+      toast.error('Failed to post comment.' + (err as Error).message);
     } finally {
       setLoading(false);
     }

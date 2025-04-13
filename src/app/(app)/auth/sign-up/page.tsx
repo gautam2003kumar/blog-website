@@ -66,7 +66,6 @@ const SignUp = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post<ApiResponse>('/api/auth/sign-up', data);
       toast.success("You registered successfully", {
         description: "Please verify your email using the verification code.",
       });
@@ -74,7 +73,7 @@ const SignUp = () => {
     } catch (error) {
       console.error("Error in signup of user", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage = axiosError.response?.data.message;
+      const errorMessage = axiosError.response?.data.message;
 
       toast.error("Signup failed", {
         description: errorMessage ?? "An unexpected error occurred. Please try again.",

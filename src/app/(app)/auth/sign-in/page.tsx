@@ -125,7 +125,7 @@ const SignIn = () => {
 
           <div className="text-center">
             <p>
-              Don't have an account yet?{' '}
+              Don&rsquo;t have an account yet?{' '}
               <Link href="/auth/sign-up" className="text-blue-600">
                 Sign up
               </Link>

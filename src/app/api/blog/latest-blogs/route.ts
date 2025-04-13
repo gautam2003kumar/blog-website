@@ -3,7 +3,7 @@ import Blog from "@/model/Blog";
 import { serveApiResponse } from "@/utils/responseUtil";
 import { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest){
+export async function GET(_req: NextRequest){
     await dbConnect();
 
     try {

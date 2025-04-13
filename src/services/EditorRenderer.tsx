@@ -10,7 +10,7 @@ interface Props {
     blocks: Block[];
 }
 
-const Delimiter = ({ data }: any) => {
+const Delimiter = () => {
     return (
         <div className="flex items-center justify-center h-screen">
             <p className="text-center">* * *</p>
