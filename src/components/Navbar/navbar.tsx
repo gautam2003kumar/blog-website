@@ -59,7 +59,7 @@ const Navbar = () => {
                                     
                                     <div className="flex flex-col space-y-3 ">
                                         <Button variant="outline"><Link href="/profile">Edit Profile</Link></Button>
-                                        <Button variant="outline" ><Link href="/dashboard">Dashboard</Link></Button>
+                                        <Button variant="outline" ><Link href="/admin-dashboard">Dashboard</Link></Button>
                                         <Button variant="outline" ><Link href={`/auth/change-password/${user?._id}`}>Change Password</Link></Button>
                                         <Button variant="outline" ><Link href={`/user-blogs/${user?._id}`}>Blogs</Link></Button>
                                         <Button variant="destructive" onClick={() => signOut()}>Logout</Button>
