@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface IComment extends Document {
   userId: mongoose.Schema.Types.ObjectId;
   blogId: mongoose.Schema.Types.ObjectId;
-  name?: string; // Optional user display name
+  name: string;
   content: string;
   likes: mongoose.Schema.Types.ObjectId[];
   createdAt: Date;
@@ -25,6 +25,7 @@ const CommentSchema: Schema<IComment> = new Schema<IComment>(
     },
     name: {
       type: String,
+      required: true,
       trim: true,
       default: "Anonymous", // Optional: fallback name
     },

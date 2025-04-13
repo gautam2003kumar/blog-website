@@ -6,6 +6,8 @@ import { getSession } from "next-auth/react";
 interface CommentRequestBody {
   content: string;
   blogId: string;
+  userId: string;
+  name: string;
   status?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
 
   try {
     const body: CommentRequestBody = await req.json();
-    const { content, blogId } = body;
+    const { content, blogId , name, userId } = body;
 
     // Basic validation
     if (!content || !blogId) {
@@ -34,10 +36,11 @@ export async function POST(req: Request) {
     if (!session?.user?._id) {
       return serveApiResponse(false, 'Unauthorized. Please log in to comment.', 401);
     }
-
+    
     // Create comment
     const newComment = await CommentModel.create({
-      userId: session.user._id,
+      userId,
+      name,
       blogId,
       content,
     });

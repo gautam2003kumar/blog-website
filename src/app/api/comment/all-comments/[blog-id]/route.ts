@@ -15,9 +15,8 @@ export async function GET(req: Request) {
 
     // Sort by likes descending, then createdAt descending
     const comments = await CommentModel.find({ blogId }).sort({ likes: -1, createdAt: -1 });
-
     if (!comments.length) {
-      return serveApiResponse(false, "No comments available for this blog", 404);
+      return serveApiResponse(false, "No comments available for this blog", 200);
     }
 
     return serveApiResponse(true, "Comments retrieved successfully", 200, comments);  

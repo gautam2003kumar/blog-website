@@ -65,7 +65,6 @@ const Home = () => {
       throw new Error('Failed to fetch trending blogs');
     }
     setTrendingBlog(response.data.data);
-    console.log(response.data.data);
   }
   // Fetch blogs when the component mounts
   useEffect(() => {
